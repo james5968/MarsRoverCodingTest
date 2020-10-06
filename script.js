@@ -12,11 +12,24 @@ const compass = [
 	'E'
 ];
 
-/* -------------------------- HTML Element Fetching ------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                           HTML Element Assignment                          */
+/* -------------------------------------------------------------------------- */
 
-let roverDiv = document.getElementById('roverFinal');
-let gridSizeHtml = document.getElementById('gridSize');
-let errorHtml = document.getElementById('error');
+const roverDiv = document.getElementById('roverFinal');
+const gridSizeHtml = document.getElementById('gridSize');
+const errorHtml = document.getElementById('error');
+const numRoversHtml = document.getElementById('numRovers');
+const textAreaInput = document.getElementById('instructionInput');
+
+/* ------------------------------ HTML Helpers ------------------------------ */
+
+const resetVals = () => {
+	// Reset common values helper
+	roverDiv.innerHTML = '';
+	gridSizeHtml.innerHTML = '';
+	numRoversHtml.innerHTML = '';
+};
 
 /* -------------------------------------------------------------------------- */
 /*                              Compass Handling                              */
@@ -71,9 +84,7 @@ const setDirection = (initial, change) => {
 const moveRover = (position, instruction) => {
 	try {
 		// Remove white space from instruction string and convert to array
-
 		let instructionArray = instruction.split('');
-
 		// initialise rover position and transform into array in format [X,Y,Orientation]
 		let positionArray = position.replace(/\s/g, '').split('');
 		for (let i = 0; i < instructionArray.length; i++) {
@@ -93,9 +104,8 @@ const moveRover = (position, instruction) => {
 		}
 		return positionArray.join();
 	} catch (err) {
-		errorHtml.innerHTML = 'Instructions appear to be invalid!';
-		roverDiv.innerHTML = '';
-		gridSizeHtml.innerHTML = '';
+		errorHtml.innerHTML = 'Instructions appear to be invalid! Please check and try again.';
+
 		document.getElementById('numRovers').innerHTML = '';
 	}
 };
@@ -122,14 +132,11 @@ const handleSubmit = () => {
 
 	/* -------------------------- HTML Helpers -------------------------- */
 	// Clears data from html incase new data submitted
-	roverDiv.innerHTML = '';
 	errorHtml.innerHTML = '';
-	gridSizeHtml.innerHTML = '';
-	document.getElementById('numRovers').innerHTML = '';
-
+	resetVals();
 	/* --------------------------------- Html tertiary info -------------------------------- */
 
-	document.getElementById('gridSize').innerHTML = 'Grid Size: ' + gridSize;
+	gridSizeHtml.innerHTML = 'Grid Size: ' + gridSize;
 	document.getElementById('numRovers').innerHTML = 'Number of Rovers: ' + roverArray.length;
 
 	/* -------------------------- Instructions dispatch ------------------------- */
@@ -144,6 +151,9 @@ const handleSubmit = () => {
 		roverP.appendChild(roverFinalPos);
 		roverDiv.appendChild(roverP);
 	}
+	if (errorHtml.innerHTML) {
+		resetVals();
+	}
 	// Clear Input ready for new data
-	document.getElementById('instructionInput').value = null;
+	textAreaInput.value = null;
 };
