@@ -13,7 +13,12 @@ const errorHtml = document.getElementById('error');
 const numRoversHtml = document.getElementById('numRovers');
 const textAreaInput = document.getElementById('instructionInput');
 
-/* ------------------------------ HTML Helpers ------------------------------ */
+/* ---------------------------- Helper functions ---------------------------- */
+
+const withinGrid = (roverCord, platCord) => {
+	//finds true if value lands within the bounds of that axis
+	return roverCord >= 0 && roverCord <= platCord;
+};
 
 const resetVals = () => {
 	// Reset common values helper
@@ -22,24 +27,23 @@ const resetVals = () => {
 	numRoversHtml.innerHTML = '';
 };
 
-/* ---------------------------- Helper functions ---------------------------- */
-const withinGrid = (roverCord, platCord) => {
-	return roverCord >= 0 && roverCord <= platCord;
-};
-
 /* -------------------------------------------------------------------------- */
-/*                              Compass Handling                              */
+/*                              Direction Handling                              */
 /* -------------------------------------------------------------------------- */
 
 const setDirection = (initial, change) => {
 	try {
+		// Define compass so we can loop through
 		const COMPASS = [
 			'N',
 			'E',
 			'S',
 			'W'
 		];
+		//Find index of starting direction
 		let startIndex = COMPASS.indexOf(initial);
+
+		//helper conditional to loop back round if we leave the bounds of the array
 		const helperCondition = () => {
 			if (startIndex > 3) {
 				startIndex = 0;
@@ -47,6 +51,7 @@ const setDirection = (initial, change) => {
 				startIndex = 3;
 			}
 		};
+		//switch to determine to loop through clockwise or anti-clockwise
 		switch (change) {
 			case 'R':
 				startIndex++;
@@ -76,20 +81,32 @@ const moveRover = (position, instruction, gridSize) => {
 		let instructionArray = instruction.toUpperCase().split('');
 		// initialise rover position convert to uppercase and transform into array in format [X,Y,Orientation]
 		let positionArray = position.toUpperCase().replace(/\s/g, '').split('');
-		for (let i = 0; i < instructionArray.length; i++) {
-			if (instructionArray[i] !== 'M') {
-				positionArray[2] = setDirection(positionArray[2], instructionArray[i]);
-			} else if (instructionArray[i] == 'M') {
-				if (positionArray[2] == 'W') {
-					positionArray[0] = parseInt(positionArray[0]) - 1;
-				} else if (positionArray[2] == 'E') {
-					positionArray[0] = parseInt(positionArray[0]) + 1;
-				} else if (positionArray[2] == 'N') {
-					positionArray[1] = parseInt(positionArray[1]) + 1;
-				} else if (positionArray[2] == 'S') {
-					positionArray[1] = parseInt(positionArray[1]) - 1;
-				}
+		//Handle a movement based off facing direction
+		const handleMove = () => {
+			//Assign temp holders for array values
+			let tempX = parseInt(positionArray[0]);
+			let tempY = parseInt(positionArray[1]);
+			//run through switch to make appropriate coordinate change
+			switch (positionArray[2]) {
+				case 'W':
+					positionArray[0] = tempX - 1;
+					break;
+				case 'E':
+					positionArray[0] = tempX + 1;
+					break;
+				case 'N':
+					positionArray[1] = tempY + 1;
+					break;
+				case 'S':
+					positionArray[1] = tempY - 1;
+					break;
 			}
+		};
+		//loop through Instructions deciding whether to move or change direction
+		for (let i = 0; i < instructionArray.length; i++) {
+			instructionArray[i] !== 'M'
+				? (positionArray[2] = setDirection(positionArray[2], instructionArray[i]))
+				: handleMove();
 		}
 		if (withinGrid(positionArray[0], gridSize[0]) && withinGrid(positionArray[1], gridSize[1])) {
 			return positionArray.join(' ');
@@ -152,9 +169,12 @@ const handleSubmit = () => {
 		if (errorHtml.innerHTML) {
 			resetVals();
 		}
+
 		// Clear Input ready for new data
 		textAreaInput.value = null;
 	}
 };
+
+/* ------------------------- Export for Jest testing ------------------------ */
 
 module.exports = { moveRover };
