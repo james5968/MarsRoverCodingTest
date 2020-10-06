@@ -67,7 +67,7 @@ const setDirection = (initial, change) => {
 				throw 'Invalid orientation change or Cardinal point supplied';
 		}
 	} catch (err) {
-		document.getElementById('error').innerHTML = err.message;
+		errorHtml.innerHTML = err.message;
 	}
 };
 
@@ -116,7 +116,7 @@ const moveRover = (position, instruction, gridSize) => {
 	} catch (err) {
 		errorHtml.innerHTML = 'Instructions appear to be invalid! Please check and try again.';
 
-		document.getElementById('numRovers').innerHTML = '';
+		numRoversHtml.innerHTML = '';
 	}
 };
 
@@ -152,7 +152,7 @@ const handleSubmit = () => {
 		/* --------------------------------- Html tertiary info -------------------------------- */
 
 		gridSizeHtml.innerHTML = 'Grid Size: ' + gridSize;
-		document.getElementById('numRovers').innerHTML = 'Number of Rovers: ' + roverArray.length;
+		numRoversHtml.innerHTML = 'Number of Rovers: ' + roverArray.length;
 
 		/* -------------------------- Instructions dispatch ------------------------- */
 		for (let i = 0; i < roverArray.length; i++) {
