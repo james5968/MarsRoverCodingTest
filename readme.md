@@ -9,11 +9,11 @@ Expects instructions in block form (literally copy and past the test input or ma
 <u>Eg:</u>
 
 ```
-*5 5
+5 5
 1 2 N
 LMLMLMLMM
 3 3 E
-MMRMMRMRRM*
+MMRMMRMRRM
 ```
 
 <u>**Unit testing**</u>
