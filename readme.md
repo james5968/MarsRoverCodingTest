@@ -24,13 +24,7 @@ or
 
 `yarn run test`
 
-<<<<<<< HEAD
 Uses given test input to validate moveRover logic includes additional test case for leaving plateau area.
-=======
-Uses given test input to validate moveRover logic includes additional test case for leaving plateau area
->>>>>>> 6b027f5f80f6577152d16808c38d8884a28cff3a
-
-
 
 
 
