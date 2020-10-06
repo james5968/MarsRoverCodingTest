@@ -8,16 +8,31 @@
     <title>Mars Rover Coding Test</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <h1>Mars Rover Coding Test</h1>
+    <h1>Mars Rover Coding Test
+    </h1>
+    <h3>Please submit your rover instructions in the format as follows</h3>
+    <p>1st line upper right coordinates of plateau</p>
+
+    <p>Each rover must have 2 lines of input, the first being its initial position, the second being it's instruction
+        set
+    </p>
+    <p>Eg:</p>
+    <p>5 5 (Top right coordinates)
+    </p>
+    <p>1 2 N (initial position)
+    </p>
+    <p>LMLMLMLMM (instruction Set)</p>
+    <p>etc. with more rover pairs as required</p>
 
     <textarea id="instructionInput" name="instructionInput" rows="10" cols="50">
 
 </textarea>
-    <button onclick="handleSubmit()">Submit Instuctions</button>
+    <div> <button onclick="handleSubmit()">Submit Instuctions</button></div>
+
     <p id="error"></p>
     <p id="gridSize"></p>
     <p id="numRovers"></p>

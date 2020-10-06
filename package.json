@@ -4,7 +4,7 @@
   "description": "Coding Test based on mars rover problem in javascript",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "jest --verbose"
   },
   "author": "James Ashford",
   "license": "ISC",
