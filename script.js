@@ -75,7 +75,7 @@ const setDirection = (initial, change) => {
 /*                            Instruction Handling                            */
 /* -------------------------------------------------------------------------- */
 
-const moveRover = (position, instruction, gridSize) => {
+export const moveRover = (position, instruction, gridSize) => {
 	try {
 		// Remove white space from instructions change to uppercase string and convert to array
 		let instructionArray = instruction.toUpperCase().split('');
@@ -176,5 +176,3 @@ const handleSubmit = () => {
 };
 
 /* ------------------------- Export for Jest testing ------------------------ */
-
-module.exports = { moveRover };

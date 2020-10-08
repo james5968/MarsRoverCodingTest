@@ -7,8 +7,6 @@
     "test": "jest --verbose"
   },
   "author": "James Ashford",
-  "license": "ISC",
-  "devDependencies": {
-    "jest": "^26.5.0"
-  }
+  "license": "ISC"
+
 }
