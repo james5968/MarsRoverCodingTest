@@ -14,7 +14,7 @@ const testCase = (desc, input, expected) => {
 
 const test = () => {
 	testCase(
-		'Move rover from initial position 1 2 N with instruction set LMLMLMLMM expected output 1 3 N',
+		'Move rover from initial position 1 2 N with instruction set LMLMLMLMM, expected output: 1 3 N',
 		moveRover('1 2 N', 'LMLMLMLMM', [
 			5,
 			5
@@ -22,7 +22,7 @@ const test = () => {
 		'1 3 N'
 	);
 	testCase(
-		'Move rover initial position 3 3 E with instruction set MMRMMRMRRM expected out put 5 1 E',
+		'Move rover initial position 3 3 E with instruction set MMRMMRMRRM, expected output: 5 1 E',
 		moveRover('3 3 E', 'MMRMMRMRRM', [
 			5,
 			5
@@ -30,7 +30,7 @@ const test = () => {
 		'5 1 E'
 	);
 	testCase(
-		'Move rover initial position 1 2 N with instruction set LMLMLMRMM expect the rover to go out of bounds',
+		'Move rover initial position 1 2 N with instruction set LMLMLMRMM, expect the rover to go out of bounds',
 		moveRover('1 2 N', 'LMLMLMRMM', [
 			5,
 			5
