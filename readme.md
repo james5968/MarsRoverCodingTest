@@ -17,12 +17,7 @@ MMRMMRMRRM
 ```
 
 <u>**Unit testing**</u>
-
-`npm test `
-
-or
-
-`yarn run test`
+Test now run without dependencies and the outputs of the test can be found in the browser console. 
 
 Uses given test input to validate moveRover logic includes additional test case for leaving plateau area.
 
