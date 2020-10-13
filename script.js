@@ -175,4 +175,111 @@ const handleSubmit = () => {
 	}
 };
 
-/* ------------------------- Export for Jest testing ------------------------ */
+
+
+/* -------------------------------------------------------------------------- */
+/*                              Class refactoring                             */
+/* -------------------------------------------------------------------------- */
+
+
+class Rover {
+	constructor(name, position,grid) {
+		this.name=name;
+		this.position = position;
+		this.grid = grid
+	}
+	moveRover(instruction) {
+		try {
+			// Remove white space from instructions change to uppercase string and convert to array
+			let instructionArray = instruction.toUpperCase().split('');
+			// initialise rover position convert to uppercase and transform into array in format [X,Y,Orientation]
+			let positionArray = this.position.toUpperCase().replace(/\s/g, '').split('');
+			//Handle a movement based off facing direction
+			const handleMove = () => {
+				//Assign temp holders for array values
+				let tempX = parseInt(positionArray[0]);
+				let tempY = parseInt(positionArray[1]);
+				//run through switch to make appropriate coordinate change
+				switch (positionArray[2]) {
+					case 'W':
+						positionArray[0] = tempX - 1;
+						break;
+					case 'E':
+						positionArray[0] = tempX + 1;
+						break;
+					case 'N':
+						positionArray[1] = tempY + 1;
+						break;
+					case 'S':
+						positionArray[1] = tempY - 1;
+						break;
+				}
+			};
+			//loop through Instructions deciding whether to move or change direction
+			for (let i = 0; i < instructionArray.length; i++) {
+				instructionArray[i] !== 'M'
+					? (positionArray[2] = this.setDirection(positionArray[2], instructionArray[i]))
+					: handleMove();
+			}
+			if (withinGrid(positionArray[0], this.grid[0]) && withinGrid(positionArray[1], this.grid[1])) {
+				this.position = positionArray.join(' ')
+				return `${this.name} moved to ${this.position}`;
+			} else {
+				return 'The rover left the plateau! (Thats going to be an expensive mistake)';
+			}
+		} catch (err) {
+			errorHtml.innerHTML = 'Instructions appear to be invalid! Please check and try again.';
+
+			numRoversHtml.innerHTML = '';
+		}
+	}
+	setDirection(initial, change) {
+		try {
+			// Define compass so we can loop through
+			const COMPASS = [
+				'N',
+				'E',
+				'S',
+				'W'
+			];
+			//Find index of starting direction
+			let startIndex = COMPASS.indexOf(initial);
+
+			//helper conditional to loop back round if we leave the bounds of the array
+			const helperCondition = () => {
+				if (startIndex > 3) {
+					startIndex = 0;
+				} else if (startIndex < 0) {
+					startIndex = 3;
+				}
+			};
+			//switch to determine to loop through clockwise or anti-clockwise
+			switch (change) {
+				case 'R':
+					startIndex++;
+					helperCondition();
+					return COMPASS[startIndex];
+					break;
+				case 'L':
+					startIndex--;
+					helperCondition();
+					return COMPASS[startIndex];
+					break;
+				default:
+					throw 'Invalid orientation change or Cardinal point supplied';
+			}
+		} catch (err) {
+			errorHtml.innerHTML = err.message;
+		}
+
+
+	}
+}
+
+/* ------------------------------ Class testing ----------------------------- */
+
+let rover1 = new Rover('ROVVEY', '1 2 N', [5, 5])
+console.log(rover1.moveRover('LMLMLMLMM'))
+console.log(rover1.moveRover('LMLMLMLMM'))
+
+
